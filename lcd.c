@@ -8,13 +8,15 @@ static GPIO_TypeDef* port_EN;
 static GPIO_TypeDef* port_RS;
 static uint16_t PIN_RS, PIN_EN;
 
-void lcd_init(lcd_t * lcd)
+void lcd_init(lcd_t *lcd)
 {
 	for(i=0 ;i<8 ;i=i+1 )
 	{
-		D[i]= lcd_t.data_pins[i];
+		D[i]= lcd.data_pins[i];
 	}
-	PIN_EN=lcd_t.en_port;
-	PIN_RS=lcd_t.rs_port;
+	PIN_EN=lcd.en_port;
+	PIN_RS=lcd.rs_port;
 	state=mode;	
 }
+void lcd_puts(lcd_t *lcd,char *str)
+
