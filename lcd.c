@@ -1,6 +1,8 @@
 #include "lcd.h"
 #include "stm32f4xx_hal.h"
 
+#define D0_PIN_Start  1
+
 static GPIO_TypeDef* PORT_LCD;	
 static uint8_t state;		    	
 static uint16_t D[8];	
@@ -24,15 +26,15 @@ void lcd_init(lcd_t *lcd)
 		D[i]= lcd.data_pins[i];
 	}
 	break;}
-	PIN_EN=lcd.en_port;
-	PIN_RS=lcd.rs_port;
+	PIN_EN=lcd.en_pin;
+	PIN_RS=lcd.rs_pin;
 	state=mode;	
 }
-void lcd_putchar(lcd_t * lcd, uint8_t character)
+void lcd_putchar(lcd_t *lcd, uint8_t character)
 
 void lcd_puts(lcd_t *lcd,char *str)
 {
-  HAL_Delay(1);
+  HAL_Delay(T);
   while(*str != 0)
   {
     lcd_putchar(lcd , *str);
@@ -41,17 +43,10 @@ void lcd_puts(lcd_t *lcd,char *str)
 }
 void lcd_clear (lcd_t *lcd)
 { 
-  if (lcd->mode==0)
-  {
-    for (unsigned char i = 0 ; i < 4 ; ++i)
-     {
-      D >>= 1 ;
-     } else
-   {
-    for (unsigned char i = 0 ; i < 8 ; ++i)
-     {
-      D >>= 1 ;
-     }
-   }
- }
+HAL_Delay(T);
+HAL_GPIO_WritePin(GPIOB,(1<<rs_pin),GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOA,(0xFF<<D0_PIN_Start),GPIO_PIN_RESET);
+HAL_GPIO_WritePin(GPIOA,(0x01<<D0_PIN_Start),GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOB,(1<<en_pin),GPIO_PIN_SET);
+HAL_GPIO_WritePin(GPIOB,(1<<en_pin),GPIO_PIN_RESET);
 }
