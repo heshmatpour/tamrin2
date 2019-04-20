@@ -28,5 +28,14 @@ void lcd_init(lcd_t *lcd)
 	PIN_RS=lcd.rs_port;
 	state=mode;	
 }
-void lcd_puts(lcd_t *lcd,char *str)
+void lcd_putchar(lcd_t * lcd, uint8_t character)
 
+void lcd_puts(lcd_t *lcd,char *str)
+{
+  HAL_Delay(1);
+  while(*str != 0)
+  {
+    lcd_putchar(lcd , *str);
+    str++;
+  }
+}
