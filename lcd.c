@@ -10,10 +10,20 @@ static uint16_t PIN_RS, PIN_EN;
 
 void lcd_init(lcd_t *lcd)
 {
-	for(i=0 ;i<8 ;i=i+1 )
+	switch(mode)
+	{
+	 case 1:
+	for(uint8_t i=0 ;i<8 ;i=i+1 )
 	{
 		D[i]= lcd.data_pins[i];
 	}
+	break;
+	 default:
+	for(uint8_t i=0 ;i<4 ;i=i+1 )
+	{
+		D[i]= lcd.data_pins[i];
+	}
+	break;}
 	PIN_EN=lcd.en_port;
 	PIN_RS=lcd.rs_port;
 	state=mode;	
