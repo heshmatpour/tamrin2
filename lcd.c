@@ -39,3 +39,19 @@ void lcd_puts(lcd_t *lcd,char *str)
     str++;
   }
 }
+void lcd_clear (lcd_t *lcd)
+{ 
+  if (lcd->mode==0)
+  {
+    for (unsigned char i = 0 ; i < 4 ; ++i)
+     {
+      D >>= 1 ;
+     } else
+   {
+    for (unsigned char i = 0 ; i < 8 ; ++i)
+     {
+      D >>= 1 ;
+     }
+   }
+ }
+}
